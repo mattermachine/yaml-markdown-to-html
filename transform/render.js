@@ -36,6 +36,16 @@ module.exports = function(_,currentFileData, filesInCurrentFolder, allFiles) {
     if ("engineOperatorType" in currentFileData.properties) {
         operatorType = currentFileData.properties.engineOperatorType;
     }
+    var nameString = '<div>';
+    if (currentFileData.obsolete === true) {
+        nameString += '  <b>--- OBSOLETE ---</b>';
+    }
+    nameString += '<h1>' + currentFileData.name + '</h1>';
+    if (currentFileData.summ === true) {
+        nameString += '  <hr><b>Available in SUMM.</b>';
+    }
+    nameString += '</div>\n';
+
     return Promise.resolve(
 
         // http://jsfiddle.net/KJQ9K/554/
@@ -47,8 +57,9 @@ module.exports = function(_,currentFileData, filesInCurrentFolder, allFiles) {
         +'.key { color: red; }'
         +'</style>'
 
-        +'<div><h1>'+currentFileData.name+'</h1></div>\n'
-        +'<div>C# operator: '+operatorType+'</div>\n'
+        +nameString
+        +'<hr>\n'
+        +'<div>C# operator: <b>'+operatorType+'</b></div>\n'
         +'<hr>\n'
         +'<div>\n'
         // +'help: '
