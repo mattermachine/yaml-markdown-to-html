@@ -1,16 +1,13 @@
-yaml-markdown-to-html [![version][1]][2] [![build][3]][4]
+yaml-to-html
 =======================
 
-render a folder of markdown files with yaml front matter to html
-
-__Example:__
-![transformation example](example.png)
+render a folder of yaml files to html, recursively
 
 Installation
 ------------
 
 ```bash
-npm i yaml-markdown-to-html
+npm i yaml-to-html
 ```
 
 Usage
@@ -20,13 +17,13 @@ The command line interface accepts three folders:
 
 ```bash
 # build
-yaml-markdown-to-html <markdown> <html> <transform>
+yaml-to-html <yaml> <html> <transform>
 
 # watch
-yaml-markdown-to-html --watch <markdown> <html> <transform>
+yaml-to-html --watch <yaml> <html> <transform>
 ```
 
-`<markdown>` is the source folder that contains the markdown files to render. `<html>` is the destination folder that will contain the rendered html files. `<transform>` is the folder, which contains at least a `render.js` and may contain a `post-render.js`, as well as other files that are used to render the markdown files to html. By default the CLI will look for a folder with the same name as the argument if omitted.
+`<yaml>` is the source folder that contains the yaml files to render. `<html>` is the destination folder that will contain the rendered html files. `<transform>` is the folder, which contains at least a `render.js` and may contain a `post-render.js`, as well as other files that are used to render the yaml files to html. By default the CLI will look for a folder with the same name as the argument if omitted.
 
 `transform/render.js` is called once per file and gets an object with its parsed meta data and the raw markdown string, a collection of all other files in the current directory plus index pages of folders in the current directory and a collection of all files. It should return a Promise that fulfills with the rendered HTML.
 
