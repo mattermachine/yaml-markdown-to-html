@@ -1,4 +1,6 @@
-var excludeFields = ["icon","help","ui:position"];
+var excludeRootFields = ["icon","help","video","exampleMachine"];
+var excludePropertiesFields = ["type","engineOperatorType"];  // TODO
+var excludePropertyFields = ["ui:position"];  // TODO
 
 // http://jsfiddle.net/KJQ9K/554/
 function syntaxHighlight(json) {
@@ -28,8 +30,12 @@ function syntaxHighlight(json) {
 }
 
 module.exports = function(_,currentFileData, filesInCurrentFolder, allFiles) {
-    var culledJson = _.omit(currentFileData, excludeFields);
+    var culledJson = _.omit(currentFileData, excludeRootFields);
     var prettyJson = syntaxHighlight(culledJson);
+    var operatorType = currentFileData.properties.type;
+    if ("engineOperatorType" in currentFileData.properties) {
+        operatorType = currentFileData.properties.engineOperatorType;
+    }
     return Promise.resolve(
 
         // http://jsfiddle.net/KJQ9K/554/
@@ -42,11 +48,20 @@ module.exports = function(_,currentFileData, filesInCurrentFolder, allFiles) {
         +'</style>'
 
         +'<div><h1>'+currentFileData.name+'</h1></div>\n'
+        +'<div>C# operator: '+operatorType+'</div>\n'
         +'<hr>\n'
         +'<div>\n'
         // +'help: '
         // +JSON.stringify(currentFile.help, null, 2)
         +currentFileData.help
+        +'</div>\n'
+        +'<hr>\n'
+        +'<div>\n'
+        +currentFileData.video
+        +'</div>\n'
+        +'<hr>\n'
+        +'<div>\n'
+        +currentFileData.exampleMachine
         +'</div>\n'
         +'<hr>\n'
         +'<pre>\n'
