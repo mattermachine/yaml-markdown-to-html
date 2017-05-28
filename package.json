@@ -1,10 +1,14 @@
 {
-  "name": "yaml-markdown-to-html",
+  "name": "yaml-to-html",
   "version": "7.1.0",
-  "description": "render a folder of markdown files with yaml front matter to html",
+  "description": "Render a folder of YAML files to html.",
   "main": "index.js",
-  "bin": "bin/cli",
-  "author": "Maximilian Hoffmann",
+  "bin":
+    {
+      "build-descriptor-reference": "bin/cli",
+      "yaml-to-html": "bin/cli"
+    },
+  "author": "(forked from) Maximilian Hoffmann",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -20,12 +24,12 @@
     "fs-extra": "^0.16.5",
     "globby": "^1.2.0",
     "lodash": "^3.5.0",
-    "yaml-front-matter": "^3.2.3"
+    "js-yaml": "^3.8.4"
   },
   "keywords": [
     "markdown",
     "yaml",
-    "front matter",
+    "js-yaml",
     "html",
     "render"
   ],

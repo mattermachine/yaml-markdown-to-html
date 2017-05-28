@@ -3,7 +3,7 @@
 var path = require('path');
 var globby = require('globby');
 var assign = require('lodash/object/assign');
-var yamlMarkdownToHtml = require('../');
+var yamlToHtml = require('../');
 
 var watching = ['-w', '--watch'].indexOf(process.argv[2]) > -1;
 var args = watching ? process.argv.slice(3) : process.argv.slice(2);
@@ -17,8 +17,8 @@ var params = {
 };
 
 var markdownFiles = [
-  path.join(params.markdown, '**/*.md'),
-  path.join(params.markdown, '**/*.markdown')
+  path.join(params.markdown, '**/*.yml'),
+  path.join(params.markdown, '**/*.yaml')
 ];
 
 params.files = globby.sync(markdownFiles, { nodir: true });
@@ -26,13 +26,13 @@ try {
   params.postRender = require(path.join(transformFolder, 'post-render'));
 } catch(error) {}
 
-yamlMarkdownToHtml(params);
+yamlToHtml(params);
 
 if (watching) {
   require('chokidar')
     .watch(params.files)
     .on('change', function(filePath) {
-      yamlMarkdownToHtml(assign({}, params, {
+      yamlToHtml(assign({}, params, {
         files: [filePath]
       }));
     });
@@ -41,7 +41,7 @@ if (watching) {
     .watch(transformFolder)
     .on('change', function(filePath) {
       delete require.cache[filePath];
-      yamlMarkdownToHtml(assign({}, params, {
+      yamlToHtml(assign({}, params, {
         files: globby.sync(markdownFiles, { nodir: true }),
       }));
     });

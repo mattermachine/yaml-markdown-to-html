@@ -3,14 +3,14 @@
 var path = require('path');
 
 var fs = require('fs-extra');
-var yaml = require('yaml-front-matter');
+var yaml = require('js-yaml');
 var chalk = require('chalk');
 var cloneDeep = require('lodash/lang/cloneDeep');
 
 var REGEX_NEWLINES = /^\n+/;
 var REGEX_NO_FOLDER = /^[^\/]+(\/index)?$/;
 
-function yamlMarkdownToHtml(args) {
+function yamlToHtml(args) {
   var html = (args.files || [])
     .map(getFileContents)
     .map(callRender);
@@ -28,9 +28,12 @@ function yamlMarkdownToHtml(args) {
     var contents = fs.readFileSync(filePath, 'utf-8');
     var stats = fs.statSync(filePath);
 
-    var data = yaml.loadFront(contents, 'markdown');
-    data.markdown = data.markdown.replace(REGEX_NEWLINES, '');
+      // var descriptorJson = yaml.load(contents);    // https://github.com/nodeca/js-yaml/blob/master/README.md
+      var descriptorJson = { name: "tom", help: "HELP!!"};
+    var data = {};
     data.path = relativePath;
+    data.name = descriptorJson.name;
+    data.help = descriptorJson.help || '';
     data.updatedAt = stats.mtime;
     data.createdAt = stats.birthtime;
     return data;
@@ -73,4 +76,4 @@ function yamlMarkdownToHtml(args) {
   }
 }
 
-module.exports = yamlMarkdownToHtml;
+module.exports = yamlToHtml;
