@@ -6,6 +6,7 @@ var fs = require('fs-extra');
 var yaml = require('js-yaml');
 var chalk = require('chalk');
 var cloneDeep = require('lodash/lang/cloneDeep');
+var _ = require('underscore');
 
 var REGEX_NEWLINES = /^\n+/;
 var REGEX_NO_FOLDER = /^[^\/]+(\/index)?$/;
@@ -28,14 +29,15 @@ function yamlToHtml(args) {
         var contents = fs.readFileSync(filePath, 'utf-8');
         var stats = fs.statSync(filePath);
 
-        // var descriptorJson = yaml.load(contents);    // https://github.com/nodeca/js-yaml/blob/master/README.md
-        var descriptorJson = { name: "tom", help: "HELP!!"};
+        console.log(chalk.yellow('Getting file contents for ' + relativePath));
+        // console.log("\n\n" + contents + "\n\n");
+        var descriptorJson = yaml.load(contents);    // https://github.com/nodeca/js-yaml/blob/master/README.md
+        // var descriptorJson = { name: "tom", help: "HELP!!"};
         var data = {};
         data.path = relativePath;
-        data.name = descriptorJson.name;
-        data.help = descriptorJson.help || '';
-        data.updatedAt = stats.mtime;
-        data.createdAt = stats.birthtime;
+        data.data = descriptorJson;
+        // data.updatedAt = stats.mtime;
+        // data.createdAt = stats.birthtime;
         return data;
     }
 
@@ -51,10 +53,10 @@ function yamlToHtml(args) {
 
         var destinationPath = path.join(args.html, file.path+'.html');
 
-        console.log(chalk.yellow('rendering '+file.path));
+        console.log(chalk.yellow('Rendering '+file.path));
         var clonedFile = cloneDeep(file);
         return Promise.resolve(
-            args.render(clonedFile, cloneDeep(filesInCurrentFolder), cloneDeep(allFiles))
+            args.render(_, clonedFile.data, cloneDeep(filesInCurrentFolder), cloneDeep(allFiles))
         )
             .then(writeFile(destinationPath, clonedFile));
     }
