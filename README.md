@@ -1,14 +1,22 @@
 yaml-to-html
-=======================
+============
 
-render a folder of yaml files to html, recursively
+Render a folder of yaml files to html, recursively.
 
-Installation
+Maintenance
 ------------
+This is a fork from [yaml-markdown-to-html](https://www.npmjs.com/package/yaml-markdown-to-html).
+Git repo at [mattermachine/yaml-to-html](https://github.com/mattermachine/yaml-to-html).
+To maintain this module:
 
-```bash
-npm i yaml-to-html
-```
+- pull the repo
+- edit
+- up version in `package.json`
+- run `npm publish` to push to Artifactory
+- up the version accordingly in other modules that use this one.
+
+To change documentation formatting, just change the `render.js` script in the host repo.  No need to edit this repo.
+
 
 Usage
 -----
@@ -51,6 +59,7 @@ module.exports = function postRender(renderedFiles) {
   return Promise.resolve(renderedFiles);
 };
 ```
+
 
 LICENSE
 -------

@@ -1,6 +1,6 @@
 {
   "name": "yaml-to-html",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Render a folder of YAML files to html.",
   "main": "index.js",
   "bin":
