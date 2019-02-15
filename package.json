@@ -1,6 +1,6 @@
 {
   "name": "yaml-to-html",
-  "version": "7.1.0",
+  "version": "0.0.0",
   "description": "Render a folder of YAML files to html.",
   "main": "index.js",
   "bin":
@@ -14,7 +14,7 @@
     "type": "git",
     "url": "https://maxhoffmann@github.com/maxhoffmann/yaml-markdown-to-html"
   },
-  "homepage": "https://github.com/maxhoffmann/yaml-markdown-to-html",
+  "homepage": "https://github.com/mattermachine/yaml-to-html",
   "scripts": {
     "test": "tape test/ | tap-spec"
   },
@@ -35,5 +35,8 @@
   "devDependencies": {
     "tap-spec": "^2.2.2",
     "tape": "^3.5.0"
+  },
+  "publishConfig": {
+    "registry": "https://artifactory.trimble.tools/artifactory/api/npm/CDG-materia-npm/"
   }
 }
